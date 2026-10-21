@@ -1,0 +1,21 @@
+{
+  "name": "jarvis-age-of-ultron-screensaver",
+  "version": "1.0.0",
+  "description": "J.A.R.V.I.S. 3D Holographic Consciousness Matrix & Chronometer Screensaver — Inspired by Avengers: Age of Ultron (Animal Logic & Territory Studio)",
+  "type": "module",
+  "scripts": {
+    "start": "npx --yes serve .",
+    "test": "node tests/pressure-test.mjs"
+  },
+  "keywords": [
+    "jarvis",
+    "age-of-ultron",
+    "screensaver",
+    "hologram",
+    "fui",
+    "hud",
+    "chronometer",
+    "3d-canvas"
+  ],
+  "license": "MIT"
+}
