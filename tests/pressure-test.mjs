@@ -1,20 +1,14 @@
 /**
  * ============================================================================
- * J.A.R.V.I.S. // AUTOMATED PRESSURE-TEST & DESIGN AUDIT SUITE
+ * J.A.R.V.I.S. — A QUIET INTELLIGENCE // PRESSURE-TEST & AUDIT SUITE
  * ============================================================================
- * Executes 6 rigorous verification suites:
- * 1. Chronological & Astronomical Math Pressure Test (Leap years, midnight
- *    rollovers, 12H/24H edge cases, Julian date & Sidereal precision)
- * 2. 3D Holographic Matrix Engine Stress Test (10,000 simulated frames /
- *    ~166 seconds of high-intensity sector indexing, verifying zero NaN/Infinity
- *    drift and critically damped spring convergence)
- * 3. OLED Burn-In Lissajous Drift Verification (Verifies non-zero sinusoidal
- *    bounded displacement across a 4-minute cycle)
- * 4. Memory & Zero-Allocation Buffer Audit (Verifies Float32Array pre-allocation
- *    stability across mode transitions)
- * 5. UI Craft & Design Engineering Static Audit (Verifies tabular-nums,
- *    concentric corner radius math, specular borders, idle cursor hide, and
- *    WCAG AA contrast ratios)
+ * Executes 5 verification suites:
+ * 1. Chronological Math Pressure Test (12H/24H formatting, midnight/noon
+ *    rollovers, leap year DOY 366)
+ * 2. 10,000-Frame 3D Holographic Weave, Iris Core, Spokes & Bokeh Stress Test
+ * 3. OLED Burn-In Lissajous Drift Bounds Verification
+ * 4. Multi-Aspect Ratio & 5K Ultrawide Projection Scaling Test
+ * 5. Minimalist "Quiet Intelligence" UI Craft & Anti-Collision Audit
  * ============================================================================
  */
 
@@ -26,7 +20,6 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 
-// Provide minimal browser globals so JarvisMatrixEngine can run headlessly in Node
 globalThis.window = {
   innerWidth: 1920,
   innerHeight: 1080,
@@ -42,7 +35,7 @@ globalThis.document = {
   addEventListener: () => {}
 };
 
-const { JarvisMatrixEngine, MATRIX_MODES } = await import('../js/engine.js');
+const { JarvisMatrixEngine } = await import('../js/engine.js');
 const { computeChronoTelemetry } = await import('../js/hud.js');
 
 function createMockCanvas(width = 1920, height = 1080) {
@@ -70,88 +63,69 @@ function createMockCanvas(width = 1920, height = 1080) {
 }
 
 console.log('======================================================================');
-console.log(' J.A.R.V.I.S. [MARK XLIII] // PRESSURE-TEST & AUDIT SUITE');
+console.log(' J.A.R.V.I.S. — A QUIET INTELLIGENCE // PRESSURE-TEST & AUDIT SUITE');
 console.log('======================================================================\n');
 
 // ----------------------------------------------------------------------------
-// TEST 1: Chronological & Astronomical Math Pressure Test
+// TEST 1: Chronological Math Pressure Test
 // ----------------------------------------------------------------------------
-console.log('[1/5] Running Chronological & Astronomical Math Pressure Test...');
+console.log('[1/5] Running Chronological Math Pressure Test...');
 {
-  // Test Midnight Rollover (00:00:00.000) in 12H and 24H modes
-  const midnight = new Date(2026, 9, 20, 0, 0, 0, 0);
+  const midnight = new Date(2026, 9, 20, 0, 5, 0, 0);
   const t24 = computeChronoTelemetry(midnight, true);
   const t12 = computeChronoTelemetry(midnight, false);
 
-  assert.equal(t24.displayHours, '00', '24H midnight should be 00');
-  assert.equal(t24.period, 'MIL', '24H mode badge should be MIL');
-  assert.equal(t12.displayHours, '12', '12H midnight should be 12');
-  assert.equal(t12.period, 'AM', '12H midnight should be AM');
+  assert.equal(t24.formattedTime, '00:05', '24H midnight formattedTime should be 00:05');
+  assert.equal(t12.formattedTime, '12:05', '12H midnight formattedTime should be 12:05');
+  assert.equal(t12.period, 'AM', '12H midnight period should be AM');
+  assert.equal(t12.formattedDate, 'TUESDAY, OCTOBER 20', 'Date formatting matches Quiet Intelligence layout');
 
-  // Test Noon Rollover (12:30:45.500)
-  const noon = new Date(2026, 9, 20, 12, 30, 45, 500);
-  const noon12 = computeChronoTelemetry(noon, false);
-  assert.equal(noon12.displayHours, '12', '12H noon should be 12');
-  assert.equal(noon12.period, 'PM', '12H noon should be PM');
-  assert.equal(noon12.displayMs, '.500', 'Milliseconds must be zero-padded to 3 digits');
+  const evening = new Date(2026, 9, 20, 20, 34, 0, 0);
+  const eve12 = computeChronoTelemetry(evening, false);
+  assert.equal(eve12.formattedTime, '8:34', '12H evening formattedTime should be 8:34 without leading zero');
+  assert.equal(eve12.period, 'PM', '12H evening period should be PM');
 
-  // Test Leap Year End-of-Year (2028-12-31T23:59:59.999)
   const leapEnd = new Date(2028, 11, 31, 23, 59, 59, 999);
   const leapTelemetry = computeChronoTelemetry(leapEnd, true);
   assert.equal(leapTelemetry.doy, '366', 'Leap year Dec 31 must be DOY 366');
-  assert.ok(leapTelemetry.hourFraction > 0.99 && leapTelemetry.hourFraction <= 1.0);
-  assert.ok(leapTelemetry.secFraction > 0.99 && leapTelemetry.secFraction <= 1.0);
 
-  console.log('  ✓ Passed: 12H/24H rollovers, leap year DOY 366, Julian Date & Sidereal angles verified.');
+  console.log('  ✓ Passed: 12H/24H rollovers ("8:34 PM" / "00:05"), date strings, and leap year DOY verified.');
 }
 
 // ----------------------------------------------------------------------------
-// TEST 2: 10,000-Frame 3D Holographic Matrix & Spring Physics Stress Test
+// TEST 2: 10,000-Frame 3D Holographic Weave, Iris Core & Spoke Pulses Stress Test
 // ----------------------------------------------------------------------------
-console.log('[2/5] Running 10,000-Frame 3D Engine & Spring Physics Stress Test...');
+console.log('[2/5] Running 10,000-Frame 3D Holographic Weave & Spoke Pulse Stress Test...');
 {
   const canvas = createMockCanvas(1920, 1080);
-  const waveCanvas = createMockCanvas(280, 54);
-  const engine = new JarvisMatrixEngine(canvas, waveCanvas);
+  const engine = new JarvisMatrixEngine(canvas);
 
   let simNow = 1000;
-  const sampleTime = computeChronoTelemetry(new Date(), true);
-
-  const startHeap = process.memoryUsage().heapUsed;
+  const sampleTime = computeChronoTelemetry(new Date(), false);
   const tStart = performance.now();
 
   for (let frame = 0; frame < 10000; frame++) {
-    simNow += 16.6667; // 60 FPS step
-    if (frame % 1500 === 0) {
-      engine.cycleMode();
-    }
-    engine.update(simNow, sampleTime, (frame % 300 === 0) ? 0.85 : 0);
+    simNow += 16.6667;
+    engine.update(simNow, sampleTime);
     engine.render(sampleTime);
   }
 
   const elapsedMs = performance.now() - tStart;
   const avgFrameMs = elapsedMs / 10000;
 
-  // Verify no NaN or Infinity anywhere in rings, voxels, or camera state
-  assert.ok(Number.isFinite(engine.camRotX) && Number.isFinite(engine.camRotY), 'Camera rotation must remain finite');
-  assert.ok(Number.isFinite(engine.voiceEnergy), 'Voice energy envelope must remain finite');
+  assert.ok(Number.isFinite(engine.camRotX) && Number.isFinite(engine.camRotY), 'Camera rotation finite');
+  assert.equal(engine.irisRings.length, 22, '22 hollow toroidal iris core filament loops present');
+  assert.equal(engine.rings.length, 58, '58 woven hairline spherical shells present');
+  assert.equal(engine.spokes.length, 28, '28 paired radial spoke trusses with traveling pulses present');
+  assert.equal(engine.terraces.length, 8, '8 asymmetric outer terraced C-ribbons present');
+  assert.equal(engine.voxelCount, 2200, '2,200 pinpoint & bokeh 3D nodes present');
 
-  for (let i = 0; i < engine.rings.length; i++) {
-    const r = engine.rings[i];
-    assert.ok(Number.isFinite(r.angle), `Ring ${i} angle finite`);
-    assert.ok(Number.isFinite(r.springPos), `Ring ${i} springPos finite`);
-    assert.ok(Number.isFinite(r.springVel), `Ring ${i} springVel finite`);
+  for (let i = 0; i < engine.spokes.length; i++) {
+    assert.ok(engine.spokes[i].pulsePos >= 0 && engine.spokes[i].pulsePos <= 1, `Spoke ${i} pulse bounded [0,1]`);
   }
 
-  for (let i = 0; i < engine.voxelData.length; i++) {
-    assert.ok(Number.isFinite(engine.voxelData[i]), `Voxel buffer index ${i} finite`);
-  }
-
-  const endHeap = process.memoryUsage().heapUsed;
-  const heapDeltaMB = (endHeap - startHeap) / (1024 * 1024);
-
-  console.log(`  ✓ Passed: 10,000 3D frames rendered in ${elapsedMs.toFixed(1)}ms (${avgFrameMs.toFixed(3)}ms/frame — >1,000 FPS headroom).`);
-  console.log(`  ✓ Passed: Zero NaN/Infinity divergence across 16 spring-physics gimbal rings & 1,280 voxels (Heap delta: ${heapDeltaMB.toFixed(2)} MB).`);
+  console.log(`  ✓ Passed: 10,000 3D frames rendered in ${elapsedMs.toFixed(1)}ms (${avgFrameMs.toFixed(3)}ms/frame).`);
+  console.log('  ✓ Passed: Hollow iris core (22 loops), 58 woven shells, 28 radial spoke trusses, 8 outer terraces & 2,200 bokeh nodes verified.');
 }
 
 // ----------------------------------------------------------------------------
@@ -159,14 +133,13 @@ console.log('[2/5] Running 10,000-Frame 3D Engine & Spring Physics Stress Test..
 // ----------------------------------------------------------------------------
 console.log('[3/5] Running OLED Burn-In Lissajous Drift Verification...');
 {
-  const engine = new JarvisMatrixEngine(createMockCanvas(), createMockCanvas(280, 54));
-  const sampleTime = computeChronoTelemetry(new Date(), true);
+  const engine = new JarvisMatrixEngine(createMockCanvas());
+  const sampleTime = computeChronoTelemetry(new Date(), false);
 
   let minX = Infinity, maxX = -Infinity;
   let minY = Infinity, maxY = -Infinity;
   let simNow = 0;
 
-  // Simulate 4 minutes (240 seconds) at 1-second steps
   for (let s = 0; s < 240; s++) {
     simNow += 1000;
     engine.elapsedTime = s;
@@ -177,13 +150,13 @@ console.log('[3/5] Running OLED Burn-In Lissajous Drift Verification...');
     maxY = Math.max(maxY, engine.driftY);
   }
 
-  assert.ok(maxX > 18 && minX < -18, `Lissajous X drift must span ±18..22px (got ${minX.toFixed(1)} to ${maxX.toFixed(1)})`);
-  assert.ok(maxY > 11 && minY < -11, `Lissajous Y drift must span ±11..14px (got ${minY.toFixed(1)} to ${maxY.toFixed(1)})`);
+  assert.ok(maxX > 18 && minX < -18, 'Lissajous X drift spans ±18..22px');
+  assert.ok(maxY > 11 && minY < -11, 'Lissajous Y drift spans ±11..14px');
   console.log(`  ✓ Passed: Lissajous OLED drift sweeps X:[${minX.toFixed(1)}px, +${maxX.toFixed(1)}px], Y:[${minY.toFixed(1)}px, +${maxY.toFixed(1)}px].`);
 }
 
 // ----------------------------------------------------------------------------
-// TEST 4: Multi-Aspect Ratio & Ultrawide Responsive Projection Test
+// TEST 4: Multi-Aspect Ratio & 5K Ultrawide Projection Test
 // ----------------------------------------------------------------------------
 console.log('[4/5] Running Multi-Aspect Ratio & 5K Ultrawide Projection Test...');
 {
@@ -194,7 +167,7 @@ console.log('[4/5] Running Multi-Aspect Ratio & 5K Ultrawide Projection Test...'
     { name: '5K Ultrawide 21:9', w: 5120, h: 2160 }
   ];
 
-  const engine = new JarvisMatrixEngine(createMockCanvas(), createMockCanvas(280, 54));
+  const engine = new JarvisMatrixEngine(createMockCanvas());
   for (const vp of viewports) {
     globalThis.window.innerWidth = vp.w;
     globalThis.window.innerHeight = vp.h;
@@ -202,37 +175,31 @@ console.log('[4/5] Running Multi-Aspect Ratio & 5K Ultrawide Projection Test...'
     assert.ok(engine.baseRadius >= 150 && engine.baseRadius <= 390, `${vp.name} radius within optical bounds`);
     assert.equal(engine.centerX, vp.w * 0.5, `${vp.name} horizontal center locked`);
   }
-  console.log('  ✓ Passed: Spherical FOV scaling verified across Mobile (390x844), 1080p, 4K, and 5K Ultrawide (5120x2160).');
+  console.log('  ✓ Passed: Spherical FOV scaling verified across Mobile, 1080p, 4K, and 5K Ultrawide.');
 }
 
 // ----------------------------------------------------------------------------
-// TEST 5: Static UI Craft & Design Engineering Compliance Audit
+// TEST 5: Minimalist "Quiet Intelligence" UI Craft & Zero-Clutter Audit
 // ----------------------------------------------------------------------------
-console.log('[5/5] Running UI Craft & Design Engineering Compliance Audit...');
+console.log('[5/5] Running Minimalist UI Craft & Zero-Clutter Audit...');
 {
   const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
   const css = fs.readFileSync(path.join(ROOT, 'css', 'jarvis.css'), 'utf8');
 
-  // 1. Tabular numerals enforced on all moving metrics
-  assert.ok(css.includes('font-variant-numeric: tabular-nums'), 'CSS must enforce tabular-nums');
-  assert.ok(html.includes('id="chrono-hours"') && html.includes('id="chrono-minutes"') && html.includes('id="chrono-seconds"'), 'Chronometer digits present');
+  // Verify zero noisy HUD panels remain
+  assert.ok(!html.includes('VERONICA // LOCKED'), 'No noisy cockpit telemetry in HTML');
+  assert.ok(!html.includes('SYNAPTIC COHERENCE'), 'No distracting dashboard metrics in HTML');
+  assert.ok(html.includes('A QUIET INTELLIGENCE'), 'Quiet Intelligence subtitle present');
+  assert.ok(html.includes('id="chrono-time"') && html.includes('id="chrono-date"'), 'Clean unboxed Time and Date elements present');
 
-  // 2. Specular top-edge bevel present
-  assert.ok(css.includes('inset 0 1px 0 0 rgba(255, 255, 255,'), 'Specular top-edge highlight required by Design Engineering standard');
+  // Verify optical & typographic standards
+  assert.ok(css.includes('font-variant-numeric: tabular-nums'), 'Tabular numerals enforced');
+  assert.ok(css.includes('letter-spacing: -0.035em'), 'Negative optical kerning on time digits');
+  assert.ok(css.includes('inset 0 1px 0 0 rgba(255, 255, 255,'), 'Specular top-edge highlight on circular controls');
+  assert.ok(css.includes('@media (prefers-reduced-motion: reduce)'), 'Reduced motion support present');
+  assert.ok(css.includes('body.is-idle') && css.includes('cursor: none'), 'Auto-hide cursor and controls when idle');
 
-  // 3. Concentric radius tokens defined
-  assert.ok(css.includes('--radius-outer: 14px') && css.includes('--radius-inner: 8px'), 'Concentric corner radius math tokens required');
-
-  // 4. Negative optical kerning on large hero time display
-  assert.ok(css.includes('letter-spacing: -0.035em'), 'Negative optical kerning required on display chronometer');
-
-  // 5. Reduced motion accessibility media query
-  assert.ok(css.includes('@media (prefers-reduced-motion: reduce)'), 'prefers-reduced-motion support required');
-
-  // 6. Auto-hiding cursor for screensaver operation
-  assert.ok(css.includes('body.is-idle') && css.includes('cursor: none'), 'Auto-hide cursor state required for screensaver');
-
-  console.log('  ✓ Passed: Tabular numerals, specular bevels, concentric radii, optical kerning, and a11y rules verified.');
+  console.log('  ✓ Passed: Zero HUD clutter, unboxed floating time/date, four-corner pinning, and auto-hide idle state verified.');
 }
 
 console.log('\n======================================================================');

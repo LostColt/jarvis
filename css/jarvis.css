@@ -1,70 +1,27 @@
 /* ==========================================================================
-   J.A.R.V.I.S. // AGE OF ULTRON NEURAL MATRIX SCREENSAVER
-   Design System: Animal Logic 3D Amber Construct + Territory Studio Tactical HUD
+   J A R V I S — A QUIET INTELLIGENCE
+   Hypnotic 3D Holographic Screensaver (Avengers: Age of Ultron)
    ========================================================================== */
 
 :root {
-  /* Luminescent Dark Mode Surface Tiers */
-  --bg-void: #040508;
-  --bg-obsidian: #080A10;
-  --hud-glass: rgba(11, 14, 22, 0.62);
-  --hud-glass-elevated: rgba(16, 20, 32, 0.78);
+  --bg-void: #020203;
+  --gold-champagne: #DFC17B;
+  --gold-warm: #D4A13E;
+  --gold-muted: rgba(212, 168, 83, 0.42);
+  --gold-ring-active: rgba(212, 168, 83, 0.62);
 
-  /* J.A.R.V.I.S. Golden-Amber Palette (Default Mode) */
-  --core-hot: #FFF7D6;
-  --core-primary: #FFB703;
-  --core-secondary: #FB8500;
-  --core-deep: #CC5803;
-  --core-glow: rgba(255, 183, 3, 0.34);
-  --core-border: rgba(255, 183, 3, 0.24);
-  --core-border-subtle: rgba(255, 183, 3, 0.11);
+  --text-time: rgba(222, 217, 206, 0.88);
+  --text-period: rgba(160, 154, 142, 0.62);
+  --text-date: rgba(132, 126, 114, 0.68);
+  --text-whisper: rgba(138, 132, 120, 0.44);
 
-  /* Stark Lab Secondary Telemetry Accent (Containment Cyan) */
-  --telemetry-cyan: #38BDF8;
-  --telemetry-cyan-glow: rgba(56, 189, 248, 0.28);
-  --telemetry-alert: #F43F5E;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 
-  /* Neutral Text Ramp (High-Contrast WCAG AA/AAA Compliant) */
-  --text-bright: #F8FAFC;
-  --text-primary: #E2E8F0;
-  --text-secondary: #94A3B8;
-  --text-muted: #64748B;
-
-  /* Typographic Stacks */
-  --font-display: 'Orbitron', 'Rajdhani', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-tactical: 'Rajdhani', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Consolas', monospace;
-
-  /* Concentric Corner Radius Scale (R_inner = R_outer - padding) */
+  /* Concentric & optical tokens */
   --radius-outer: 14px;
   --radius-inner: 8px;
-  --radius-xs: 4px;
-
-  /* Spring-calibrated CSS transitions */
-  --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-out-fast: cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Mode 2: Mind Stone Dual-Scan Comparison Palette */
-body[data-mode="mindstone"] {
-  --core-hot: #E0F7FF;
-  --core-primary: #38BDF8;
-  --core-secondary: #FFB703;
-  --core-deep: #0284C7;
-  --core-glow: rgba(56, 189, 248, 0.36);
-  --core-border: rgba(56, 189, 248, 0.28);
-  --core-border-subtle: rgba(56, 189, 248, 0.12);
-}
-
-/* Mode 3: Ultron Breach Crimson Override Palette */
-body[data-mode="ultron"] {
-  --core-hot: #FFE4E6;
-  --core-primary: #FB7185;
-  --core-secondary: #E11D48;
-  --core-deep: #881337;
-  --core-glow: rgba(244, 63, 94, 0.38);
-  --core-border: rgba(244, 63, 94, 0.30);
-  --core-border-subtle: rgba(244, 63, 94, 0.13);
+  --ease-calm: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 *,
@@ -82,80 +39,35 @@ body {
   min-height: 100dvh;
   overflow: hidden;
   background-color: var(--bg-void);
-  color: var(--text-primary);
-  font-family: var(--font-tactical);
+  color: var(--text-time);
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   user-select: none;
 }
 
-/* Screensaver Idle State: Auto-hide cursor & dock */
+.tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Auto-hide cursor and interactive chrome when idle */
 body.is-idle {
   cursor: none;
 }
 
-body.is-idle .hud-dock {
+body.is-idle #jarvis-canvas {
+  cursor: none;
+}
+
+body.is-idle .corner-controls,
+body.is-idle .corner-hint {
   opacity: 0;
-  transform: translate3d(-50%, 14px, 0) scale(0.98);
   pointer-events: none;
+  transform: translateY(4px);
 }
 
-/* Minimal HUD Mode (Press H) — Focus purely on 3D Matrix + Center Chronometer */
-body.hud-minimal .hud-flank,
-body.hud-minimal .hud-topbar {
-  opacity: 0;
-  transform: scale(0.97);
-  pointer-events: none;
-}
-
-.tabular {
-  font-variant-numeric: tabular-nums;
-  font-feature-settings: "tnum" 1, "zero" 1;
-}
-
-/* ==========================================================================
-   1. AMBIENT BACKGROUND, SCANLINES & VIGNETTE
-   ========================================================================== */
-
-.ambient-void {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  background:
-    radial-gradient(circle at 50% 45%, var(--core-glow) 0%, rgba(11, 14, 23, 0.35) 38%, transparent 72%),
-    radial-gradient(ellipse 90% 60% at 50% 100%, rgba(56, 189, 248, 0.06), transparent 65%),
-    linear-gradient(180deg, #030407 0%, #070910 50%, #030407 100%);
-  transition: background 0.8s var(--ease-spring);
-  pointer-events: none;
-}
-
-.scanline-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  background: repeating-linear-gradient(
-    to bottom,
-    transparent 0px,
-    transparent 2px,
-    rgba(255, 255, 255, 0.012) 3px,
-    transparent 4px
-  );
-  mix-blend-mode: overlay;
-}
-
-.vignette-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 3;
-  pointer-events: none;
-  background: radial-gradient(
-    circle at 50% 50%,
-    transparent 52%,
-    rgba(2, 3, 6, 0.78) 100%
-  );
-}
-
+/* Primary 3D Canvas */
 #jarvis-canvas {
   position: fixed;
   inset: 0;
@@ -170,844 +82,177 @@ body.hud-minimal .hud-topbar {
   cursor: grabbing;
 }
 
-body.is-idle #jarvis-canvas {
-  cursor: none;
-}
-
-/* ==========================================================================
-   2. HUD STAGE & LAYOUT GRID
-   ========================================================================== */
-
-.hud-stage {
-  position: relative;
-  z-index: 4;
-  width: 100%;
-  height: 100dvh;
-  max-width: 1920px;
-  margin: 0 auto;
-  padding: clamp(16px, 2.2vw, 32px);
-  display: grid;
-  grid-template-columns: minmax(260px, 320px) 1fr minmax(260px, 320px);
-  grid-template-rows: auto 1fr auto;
-  grid-template-areas:
-    "topbar topbar topbar"
-    "left   center right"
-    "dock   dock   dock";
-  gap: clamp(12px, 1.8vw, 24px);
+/* Minimalist Four-Corner Stage */
+.ambient-ui {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
   pointer-events: none;
   will-change: transform;
 }
 
-/* ==========================================================================
-   3. TOP BAR: AVENGERS TOWER LAB TELEMETRY HEADER
-   ========================================================================== */
-
-.hud-topbar {
-  grid-area: topbar;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 10px 18px;
-  background: var(--hud-glass);
-  backdrop-filter: blur(16px) saturate(160%);
-  -webkit-backdrop-filter: blur(16px) saturate(160%);
-  border: 1px solid var(--core-border-subtle);
-  border-radius: var(--radius-outer);
-  box-shadow:
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.12),
-    0 18px 36px -14px rgba(0, 0, 0, 0.65);
-  transition: opacity 0.45s var(--ease-spring), transform 0.45s var(--ease-spring);
-}
-
-.hud-brand-cluster {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.status-beacon {
-  position: relative;
-  width: 14px;
-  height: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.beacon-core {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--core-primary);
-  box-shadow: 0 0 12px var(--core-primary);
-}
-
-.beacon-ring {
+/* Top-Left Wordmark */
+.corner-brand {
   position: absolute;
-  inset: -3px;
-  border-radius: 50%;
-  border: 1.5px solid var(--core-primary);
-  opacity: 0.65;
-  animation: beaconPulse 2.4s infinite ease-out;
+  top: clamp(22px, 3vw, 36px);
+  left: clamp(24px, 3.2vw, 42px);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
-@keyframes beaconPulse {
-  0% { transform: scale(0.8); opacity: 0.85; }
-  100% { transform: scale(1.9); opacity: 0; }
-}
-
-.brand-code {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  color: var(--core-primary);
+.brand-title {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.42em;
+  color: rgba(216, 194, 146, 0.62);
   text-transform: uppercase;
-  font-weight: 600;
 }
 
-.brand-name {
-  font-family: var(--font-display);
-  font-size: clamp(15px, 1.25vw, 19px);
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  color: var(--text-bright);
-  line-height: 1.15;
-}
-
-.brand-sub {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--text-secondary);
-  margin-left: 6px;
-}
-
-.hud-top-center {
-  display: flex;
-  align-items: center;
-}
-
-.reticle-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 6px 14px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--radius-inner);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.06em;
-}
-
-.pill-label {
-  color: var(--text-muted);
-  font-weight: 600;
-}
-
-.pill-value {
-  color: var(--core-primary);
-  font-weight: 600;
-}
-
-.pill-active {
-  color: #34D399;
-}
-
-.pill-sep {
-  color: rgba(255, 255, 255, 0.16);
-}
-
-.hud-top-right {
-  display: flex;
-  align-items: center;
-  gap: 22px;
-}
-
-.metric-block {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
-.metric-label {
-  font-family: var(--font-mono);
+.brand-subtitle {
+  font-family: var(--font-sans);
   font-size: 9.5px;
-  letter-spacing: 0.12em;
-  color: var(--text-muted);
-  font-weight: 600;
+  font-weight: 400;
+  letter-spacing: 0.24em;
+  color: var(--text-whisper);
+  text-transform: uppercase;
 }
 
-.metric-value {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-bright);
-}
-
-.accent-cyan {
-  color: var(--telemetry-cyan) !important;
-}
-
-.accent-amber {
-  color: var(--core-primary) !important;
-}
-
-/* ==========================================================================
-   4. LEFT & RIGHT FLANK TELEMETRY PANELS
-   ========================================================================== */
-
-.hud-flank {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 16px;
-  transition: opacity 0.45s var(--ease-spring), transform 0.45s var(--ease-spring);
-}
-
-.hud-flank-left {
-  grid-area: left;
-}
-
-.hud-flank-right {
-  grid-area: right;
-}
-
-.hud-panel {
-  position: relative;
-  padding: 16px;
-  background: var(--hud-glass);
-  backdrop-filter: blur(14px) saturate(150%);
-  -webkit-backdrop-filter: blur(14px) saturate(150%);
-  border: 1px solid var(--core-border-subtle);
-  border-radius: var(--radius-outer);
-  box-shadow:
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.10),
-    0 20px 40px -15px rgba(0, 0, 0, 0.55);
-}
-
-/* Territory Studio Technical Corner Reticles */
-.panel-corner {
+/* Bottom-Left Subtle Shortcut Hint */
+.corner-hint {
   position: absolute;
-  width: 10px;
-  height: 10px;
-  border-color: var(--core-primary);
-  opacity: 0.7;
-  pointer-events: none;
-}
-
-.panel-corner-tl {
-  top: -1px;
-  left: -1px;
-  border-top: 2px solid var(--core-primary);
-  border-left: 2px solid var(--core-primary);
-  border-top-left-radius: 4px;
-}
-
-.panel-corner-bl {
-  bottom: -1px;
-  left: -1px;
-  border-bottom: 2px solid var(--core-primary);
-  border-left: 2px solid var(--core-primary);
-  border-bottom-left-radius: 4px;
-}
-
-.panel-corner-tr {
-  top: -1px;
-  right: -1px;
-  border-top: 2px solid var(--core-primary);
-  border-right: 2px solid var(--core-primary);
-  border-top-right-radius: 4px;
-}
-
-.panel-corner-br {
-  bottom: -1px;
-  right: -1px;
-  border-bottom: 2px solid var(--core-primary);
-  border-right: 2px solid var(--core-primary);
-  border-bottom-right-radius: 4px;
-}
-
-.panel-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 14px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-}
-
-.panel-index {
-  font-family: var(--font-mono);
+  bottom: clamp(22px, 2.8vw, 34px);
+  left: clamp(24px, 3.2vw, 42px);
+  font-family: var(--font-sans);
   font-size: 10px;
-  font-weight: 700;
-  color: var(--bg-void);
-  background: var(--core-primary);
-  padding: 1px 5px;
-  border-radius: 3px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  color: var(--text-whisper);
+  text-transform: uppercase;
+  transition: opacity 0.8s var(--ease-calm), transform 0.8s var(--ease-calm);
 }
 
-.panel-title {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  font-weight: 600;
-  letter-spacing: 0.09em;
-  color: var(--text-primary);
-  flex: 1;
-}
-
-.panel-tag {
-  font-family: var(--font-mono);
-  font-size: 9.5px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  padding: 2px 6px;
-  border-radius: 4px;
-  background: rgba(255, 183, 3, 0.12);
-  border: 1px solid var(--core-border);
-  color: var(--core-primary);
-}
-
-/* Sector Progress Rows */
-.sector-bars {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 14px;
-}
-
-.sector-row {
-  display: grid;
-  grid-template-columns: 92px 1fr 56px;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-}
-
-.sector-id {
-  color: var(--text-secondary);
-  letter-spacing: 0.04em;
-}
-
-.sector-track {
-  height: 5px;
-  background: rgba(255, 255, 255, 0.07);
-  border-radius: 3px;
-  overflow: hidden;
-}
-
-.sector-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--core-secondary), var(--core-primary));
-  box-shadow: 0 0 8px var(--core-primary);
-  border-radius: 3px;
-  transition: width 0.25s var(--ease-out-fast);
-}
-
-.sector-val {
-  text-align: right;
-  color: var(--text-bright);
-  font-weight: 500;
-}
-
-/* 2x2 Subgrid Inside Left Flank */
-.panel-Subgrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-}
-
-.subgrid-cell {
-  padding: 8px 10px;
-  background: rgba(255, 255, 255, 0.025);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: var(--radius-inner);
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.cell-label {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.1em;
-  color: var(--text-muted);
-}
-
-.cell-val {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--core-hot);
-}
-
-/* Vocal Cadence Waveform Canvas */
-.waveform-canvas {
-  width: 100%;
-  height: 54px;
-  display: block;
-  background: rgba(0, 0, 0, 0.28);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: var(--radius-inner);
-  margin-bottom: 8px;
-}
-
-.panel-micro-footer {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  color: var(--text-secondary);
-  font-style: italic;
-  line-height: 1.4;
-  min-height: 28px;
-}
-
-/* Right Flank Key-Value Telemetry */
-.telemetry-kv-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.kv-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: 8px;
-  border-bottom: 1px dashed rgba(255, 255, 255, 0.07);
-  font-family: var(--font-mono);
-  font-size: 11px;
-}
-
-.kv-row:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-.kv-key {
-  color: var(--text-muted);
-  letter-spacing: 0.06em;
-}
-
-.kv-val {
-  color: var(--text-bright);
-  font-weight: 600;
-}
-
-.hex-stream {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  line-height: 1.55;
-  color: var(--core-primary);
-  opacity: 0.85;
-  height: 88px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  background: rgba(0, 0, 0, 0.28);
-  padding: 8px 10px;
-  border-radius: var(--radius-inner);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-/* ==========================================================================
-   5. CENTER CORE CHRONOMETER & DATE READOUT (HERO FOCAL POINT)
-   ========================================================================== */
-
-.hud-center-reticle {
-  grid-area: center;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 0 8px;
-  pointer-events: none;
-}
-
-.orbital-callout {
+/* Bottom-Center Floating Time & Date */
+.time-anchor {
+  position: absolute;
+  bottom: clamp(22px, 3.2vw, 38px);
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  opacity: 0.78;
+  text-align: center;
 }
 
-.callout-line {
-  width: 1px;
-  height: 22px;
-  background: linear-gradient(180deg, var(--core-primary), transparent);
-}
-
-.callout-text {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.18em;
-  color: var(--core-hot);
-  text-shadow: 0 0 12px var(--core-glow);
-}
-
-/* Primary Chronometer Cluster anchored below the 3D Sphere Nucleus */
-.chronometer-cluster {
-  margin-top: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 18px 34px 16px;
-  background: radial-gradient(
-    ellipse at 50% 0%,
-    rgba(16, 20, 32, 0.76) 0%,
-    rgba(8, 10, 16, 0.68) 100%
-  );
-  backdrop-filter: blur(18px) saturate(170%);
-  -webkit-backdrop-filter: blur(18px) saturate(170%);
-  border: 1px solid var(--core-border);
-  border-radius: 18px;
-  box-shadow:
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.16),
-    0 24px 48px -12px rgba(0, 0, 0, 0.75),
-    0 0 40px -10px var(--core-glow);
-  transition: border-color 0.5s ease, box-shadow 0.5s ease;
-}
-
-.chrono-eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  color: var(--core-primary);
-  margin-bottom: 4px;
-}
-
-.chrono-bracket {
-  color: var(--text-muted);
-}
-
-.chrono-sep {
-  opacity: 0.45;
-}
-
-/* Hero Time Display: Negative optical kerning & zero-jitter tabular numerals */
-.chrono-time-row {
+.time-row {
   display: flex;
   align-items: baseline;
   justify-content: center;
-  font-family: var(--font-display);
-  font-size: clamp(44px, 5.2vw, 76px);
-  font-weight: 800;
+  gap: 7px;
+}
+
+.time-digits {
+  font-family: var(--font-sans);
+  font-size: clamp(30px, 3.1vw, 42px);
+  font-weight: 300;
   letter-spacing: -0.035em;
-  line-height: 1.02;
-  color: var(--core-hot);
-  text-shadow:
-    0 0 24px var(--core-glow),
-    0 2px 10px rgba(0, 0, 0, 0.8);
+  line-height: 1;
+  color: var(--text-time);
 }
 
-.chrono-digits {
-  display: inline-block;
-  min-width: 1.28em;
-  text-align: center;
-}
-
-.chrono-seconds {
-  color: var(--core-primary);
-}
-
-.chrono-colon {
-  display: inline-block;
-  padding: 0 2px;
-  color: var(--core-secondary);
-  opacity: 0.85;
-  transform: translateY(-0.06em);
-}
-
-.chrono-sub-stack {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-left: 10px;
-  transform: translateY(-4px);
-}
-
-.chrono-period {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  color: var(--telemetry-cyan);
-  padding: 1px 6px;
-  border-radius: 4px;
-  background: rgba(56, 189, 248, 0.12);
-  border: 1px solid rgba(56, 189, 248, 0.28);
-  margin-bottom: 4px;
-}
-
-.chrono-ms {
-  font-family: var(--font-mono);
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  color: var(--text-secondary);
-}
-
-/* Date Row */
-.chrono-date-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-  margin-top: 8px;
-  padding-top: 8px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  width: 100%;
-}
-
-.date-badge {
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  color: var(--bg-void);
-  background: var(--core-primary);
-  padding: 2px 9px;
-  border-radius: 4px;
-}
-
-.date-primary {
-  font-family: var(--font-tactical);
-  font-size: 16px;
-  font-weight: 700;
+.time-period {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 400;
   letter-spacing: 0.14em;
-  color: var(--text-bright);
+  color: var(--text-period);
   text-transform: uppercase;
 }
 
-.date-meta {
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  color: var(--text-secondary);
+.date-row {
+  font-family: var(--font-sans);
+  font-size: 10.5px;
+  font-weight: 400;
+  letter-spacing: 0.24em;
+  color: var(--text-date);
+  text-transform: uppercase;
 }
 
-.date-divider {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--core-primary);
-  opacity: 0.6;
-}
-
-/* Linear Mirror Progress Bars for HR / MIN / SEC */
-.chrono-arc-meters {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  width: 100%;
-  margin-top: 10px;
-}
-
-.arc-meter {
+/* Bottom-Right Circular Icon Controls */
+.corner-controls {
+  position: absolute;
+  bottom: clamp(20px, 2.8vw, 32px);
+  right: clamp(24px, 3.2vw, 42px);
   display: flex;
   align-items: center;
-  gap: 6px;
-}
-
-.arc-label {
-  font-family: var(--font-mono);
-  font-size: 9.5px;
-  font-weight: 600;
-  color: var(--text-muted);
-  letter-spacing: 0.08em;
-}
-
-.arc-bar {
-  flex: 1;
-  height: 3px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.arc-fill {
-  height: 100%;
-  width: 0%;
-  background: var(--core-primary);
-  box-shadow: 0 0 6px var(--core-primary);
-}
-
-/* ==========================================================================
-   6. BOTTOM CONTROL DOCK (AUTO-HIDING INTERACTIVE BAR)
-   ========================================================================== */
-
-.hud-dock {
-  grid-area: dock;
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translate3d(-50%, 0, 0);
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
+  gap: 10px;
   pointer-events: auto;
-  transition: opacity 0.4s var(--ease-spring), transform 0.4s var(--ease-spring);
+  transition: opacity 0.8s var(--ease-calm), transform 0.8s var(--ease-calm);
 }
 
-.dock-inner {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px;
-  background: var(--hud-glass-elevated);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid var(--core-border);
-  border-radius: var(--radius-outer);
-  box-shadow:
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.14),
-    0 20px 40px -10px rgba(0, 0, 0, 0.75);
-}
-
-/* Concentric Inner Radius: 14px outer - 6px = 8px inner */
-.dock-btn {
+.icon-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(14, 14, 16, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+  color: rgba(200, 194, 182, 0.58);
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 7px 12px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  border-radius: var(--radius-inner);
-  color: var(--text-primary);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  white-space: nowrap;
+  justify-content: center;
   cursor: pointer;
   transition:
-    background 0.2s var(--ease-spring),
-    border-color 0.2s var(--ease-spring),
-    transform 0.15s var(--ease-spring),
-    color 0.2s ease;
+    border-color 0.35s var(--ease-calm),
+    color 0.35s var(--ease-calm),
+    background 0.35s var(--ease-calm),
+    transform 0.2s var(--ease-calm);
 }
 
-.dock-btn:hover {
-  background: rgba(255, 183, 3, 0.14);
-  border-color: var(--core-primary);
-  color: var(--text-bright);
+.icon-btn:hover {
+  border-color: var(--gold-muted);
+  color: var(--gold-champagne);
+  background: rgba(24, 21, 16, 0.72);
 }
 
-.dock-btn:active {
-  transform: translateY(-1px) scale(0.98);
+.icon-btn:active {
+  transform: scale(0.95);
 }
 
-.dock-btn:focus-visible {
-  outline: 2px solid var(--core-primary);
+.icon-btn.active {
+  border-color: var(--gold-ring-active);
+  color: var(--gold-champagne);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.12),
+    0 0 16px -4px rgba(212, 168, 83, 0.25);
+}
+
+.icon-btn:focus-visible {
+  outline: 1px solid var(--gold-warm);
   outline-offset: 2px;
 }
 
-.dock-btn.active {
-  background: rgba(255, 183, 3, 0.16);
-  border-color: var(--core-primary);
-  color: var(--core-hot);
-}
-
-.dock-btn-primary {
-  background: var(--core-primary);
-  border-color: var(--core-hot);
-  color: var(--bg-void);
-}
-
-.dock-btn-primary:hover {
-  background: var(--core-hot);
-  color: var(--bg-void);
-}
-
-.dock-btn-primary .btn-key {
-  background: rgba(4, 5, 8, 0.2);
-  color: var(--bg-void);
-  border-color: rgba(4, 5, 8, 0.3);
-}
-
-.btn-key {
-  font-size: 9.5px;
-  padding: 1px 5px;
-  border-radius: var(--radius-xs);
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  color: var(--core-primary);
-}
-
-.dock-hint {
-  font-family: var(--font-mono);
-  font-size: 9.5px;
-  letter-spacing: 0.14em;
-  color: var(--text-secondary);
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
-  text-align: center;
-}
-
-/* ==========================================================================
-   7. RESPONSIVE & ACCESSIBILITY BREAKPOINTS
-   ========================================================================== */
-
-@media (max-width: 1180px) {
-  .hud-stage {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "topbar"
-      "center"
-      "dock";
-  }
-
-  .hud-flank {
+@media (max-width: 680px) {
+  .corner-hint {
     display: none;
   }
 
-  .hud-top-center {
-    display: none;
-  }
-}
-
-@media (max-width: 768px) {
-  .hud-topbar {
-    flex-direction: column;
-    align-items: flex-start;
+  .corner-controls {
+    bottom: 18px;
+    right: 18px;
     gap: 8px;
   }
 
-  .hud-top-right {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .chronometer-cluster {
-    padding: 14px 18px;
-    width: 94%;
-  }
-
-  .chrono-date-row {
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .dock-inner {
-    flex-wrap: wrap;
-    justify-content: center;
-    max-width: 94vw;
+  .time-anchor {
+    bottom: 72px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .beacon-ring {
-    animation: none;
+  .corner-controls,
+  .corner-hint {
+    transition: none;
   }
 }

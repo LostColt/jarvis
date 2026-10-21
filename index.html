@@ -3,278 +3,85 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="description" content="J.A.R.V.I.S. Holographic Neural Matrix Screensaver — Inspired by Avengers: Age of Ultron (Animal Logic & Territory Studio)" />
-  <meta name="theme-color" content="#040508" />
-  <title>J.A.R.V.I.S. // NEURAL MATRIX CHRONOMETER [MARK XLIII]</title>
+  <meta name="description" content="J.A.R.V.I.S. — A Quiet Intelligence. Hypnotic 3D Holographic Screensaver from Avengers: Age of Ultron." />
+  <meta name="theme-color" content="#020203" />
+  <title>J A R V I S — A Quiet Intelligence</title>
 
-  <!-- Preconnect & High-Craft Sci-Fi / Tabular Telemetry Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Orbitron:wght@500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="css/jarvis.css" />
 </head>
-<body class="jarvis-viewport" data-mode="jarvis">
-  <!-- Ambient Luminescent Underlay & Tactile Film Grain -->
-  <div class="ambient-void" aria-hidden="true"></div>
-  <div class="scanline-overlay" aria-hidden="true"></div>
-  <div class="vignette-overlay" aria-hidden="true"></div>
+<body class="jarvis-screensaver">
+  <!-- Primary 3D Holographic Canvas -->
+  <canvas id="jarvis-canvas" aria-label="J.A.R.V.I.S. 3D Holographic Consciousness Sphere"></canvas>
 
-  <!-- Primary 3D WebGL / Canvas Holographic Neural Matrix -->
-  <canvas id="jarvis-canvas" aria-label="J.A.R.V.I.S. 3D Holographic Consciousness Matrix"></canvas>
-
-  <!-- Stark Lab Territory Studio Tactical HUD Layer (Drifts gently for OLED burn-in protection) -->
-  <main id="hud-stage" class="hud-stage">
-
-    <!-- TOP BAR: Stark Industries / Avengers Tower Lab Header -->
-    <header class="hud-topbar">
-      <div class="hud-brand-cluster">
-        <div class="status-beacon" id="status-beacon" title="Neural Matrix Online">
-          <span class="beacon-core"></span>
-          <span class="beacon-ring"></span>
-        </div>
-        <div class="brand-titles">
-          <div class="brand-code">STARK LAB // AVENGERS TOWER — LEVEL 84</div>
-          <h1 class="brand-name">J.A.R.V.I.S. <span class="brand-sub">NEURAL CONSTRUCT v43.8</span></h1>
-        </div>
-      </div>
-
-      <!-- Center Diagnostic Reticle Readout -->
-      <div class="hud-top-center">
-        <div class="reticle-pill">
-          <span class="pill-label">PROTOCOL</span>
-          <span class="pill-value" id="hud-protocol-name">AGE OF ULTRON // GOLDEN MATRIX</span>
-          <span class="pill-sep">//</span>
-          <span class="pill-label">DRIFT GUARD</span>
-          <span class="pill-value pill-active" id="hud-drift-status">LISSAJOUS ACTIVE</span>
-        </div>
-      </div>
-
-      <!-- Right System Metrics -->
-      <div class="hud-top-right">
-        <div class="metric-block">
-          <span class="metric-label">SYNAPTIC COHERENCE</span>
-          <span class="metric-value tabular" id="hud-coherence">99.94%</span>
-        </div>
-        <div class="metric-block">
-          <span class="metric-label">FRAME ENGINE</span>
-          <span class="metric-value tabular" id="hud-fps">60 FPS</span>
-        </div>
-        <div class="metric-block">
-          <span class="metric-label">ORBITAL LINK</span>
-          <span class="metric-value tabular accent-cyan" id="hud-veronica">VERONICA // LOCKED</span>
-        </div>
-      </div>
+  <!-- Minimalist Ambient Overlay (Drifts imperceptibly for OLED burn-in protection) -->
+  <main id="hud-stage" class="ambient-ui">
+    <!-- Top-Left Whisper Wordmark -->
+    <header class="corner-brand">
+      <h1 class="brand-title">J A R V I S</h1>
+      <p class="brand-subtitle">A QUIET INTELLIGENCE</p>
     </header>
 
-    <!-- LEFT FLANK: Neural Matrix Architecture & Platter Telemetry -->
-    <aside class="hud-flank hud-flank-left" aria-label="Neural Matrix Architecture Telemetry">
-      <section class="hud-panel">
-        <div class="panel-corner panel-corner-tl"></div>
-        <div class="panel-corner panel-corner-bl"></div>
-        <div class="panel-header">
-          <span class="panel-index">01</span>
-          <span class="panel-title">HOUDINI VOXEL LATTICE // SECTORS</span>
-          <span class="panel-tag" id="sector-lock-tag">INDEXING</span>
-        </div>
+    <!-- Bottom-Left Subtle Shortcut Hint (Fades out completely when idle) -->
+    <div class="corner-hint" id="corner-hint">
+      SPACE TO PAUSE &nbsp;&middot;&nbsp; F FOR FULLSCREEN
+    </div>
 
-        <div class="sector-bars" id="sector-bars">
-          <div class="sector-row">
-            <span class="sector-id">CORE.NUCLEUS</span>
-            <div class="sector-track"><div class="sector-fill" id="bar-core" style="width: 92%"></div></div>
-            <span class="sector-val tabular" id="val-core">0xF4A9</span>
-          </div>
-          <div class="sector-row">
-            <span class="sector-id">GIMBAL.RING.A</span>
-            <div class="sector-track"><div class="sector-fill" id="bar-ring-a" style="width: 78%"></div></div>
-            <span class="sector-val tabular" id="val-ring-a">+142.8°</span>
-          </div>
-          <div class="sector-row">
-            <span class="sector-id">GIMBAL.RING.B</span>
-            <div class="sector-track"><div class="sector-fill" id="bar-ring-b" style="width: 64%"></div></div>
-            <span class="sector-val tabular" id="val-ring-b">-087.3°</span>
-          </div>
-          <div class="sector-row">
-            <span class="sector-id">PLATTER.TAPE</span>
-            <div class="sector-track"><div class="sector-fill" id="bar-platter" style="width: 85%"></div></div>
-            <span class="sector-val tabular" id="val-platter">4.82 PB/s</span>
-          </div>
-        </div>
-
-        <div class="panel-Subgrid">
-          <div class="subgrid-cell">
-            <span class="cell-label">ACTIVE VOXELS</span>
-            <span class="cell-val tabular" id="hud-voxel-count">1,280</span>
-          </div>
-          <div class="subgrid-cell">
-            <span class="cell-label">AXONAL PULSES</span>
-            <span class="cell-val tabular" id="hud-pulse-count">64 / SEC</span>
-          </div>
-          <div class="subgrid-cell">
-            <span class="cell-label">SPRING DAMPING</span>
-            <span class="cell-val tabular">ζ = 0.72</span>
-          </div>
-          <div class="subgrid-cell">
-            <span class="cell-label">GIMBAL AXES</span>
-            <span class="cell-val tabular">16 SHELLS</span>
-          </div>
-        </div>
-      </section>
-
-      <section class="hud-panel hud-panel-compact">
-        <div class="panel-header">
-          <span class="panel-index">02</span>
-          <span class="panel-title">VOCAL CADENCE HARMONICS</span>
-          <span class="panel-tag accent-amber" id="voice-state-tag">AUTONOMOUS</span>
-        </div>
-        <canvas id="waveform-canvas" class="waveform-canvas" width="280" height="54"></canvas>
-        <div class="panel-micro-footer">
-          <span id="hud-speech-transcript">"All systems nominal, Sir. Chronometer synchronized."</span>
-        </div>
-      </section>
-    </aside>
-
-    <!-- CENTER CORE OVERLAY: Non-intrusive Orbital Reticle Callouts around the 3D Sphere -->
-    <section class="hud-center-reticle" aria-live="polite">
-      <!-- Top Arc Callout -->
-      <div class="orbital-callout callout-north">
-        <span class="callout-line"></span>
-        <span class="callout-text" id="callout-north-text">AZIMUTH LOCK // 000.0°</span>
+    <!-- Bottom-Center Floating Time & Date (Unboxed, Calm, Zero Distraction) -->
+    <section class="time-anchor" aria-live="polite">
+      <div class="time-row" role="timer" aria-label="Current Time">
+        <span class="time-digits tabular" id="chrono-time">8:42</span>
+        <span class="time-period" id="chrono-period">PM</span>
       </div>
-
-      <!-- Primary Chronometer & Date Anchor (Positioned with optical balance below/integrated with core) -->
-      <div class="chronometer-cluster" id="chronometer-cluster">
-        <div class="chrono-eyebrow">
-          <span class="chrono-bracket">[</span>
-          <span id="hud-timezone">UTC-04:00 // EASTERN DAYLIGHT</span>
-          <span class="chrono-sep">•</span>
-          <span id="hud-julian">JD 2461334.340</span>
-          <span class="chrono-bracket">]</span>
-        </div>
-
-        <!-- Massive High-Craft Time Readout -->
-        <div class="chrono-time-row" role="timer" aria-label="Current Time">
-          <span class="chrono-digits tabular" id="chrono-hours">20</span>
-          <span class="chrono-colon" id="chrono-colon-1">:</span>
-          <span class="chrono-digits tabular" id="chrono-minutes">09</span>
-          <span class="chrono-colon" id="chrono-colon-2">:</span>
-          <span class="chrono-digits chrono-seconds tabular" id="chrono-seconds">41</span>
-          <div class="chrono-sub-stack">
-            <span class="chrono-period" id="chrono-period">PM</span>
-            <span class="chrono-ms tabular" id="chrono-ms">.000</span>
-          </div>
-        </div>
-
-        <!-- Full Date & Stark Chronological Telemetry Bar -->
-        <div class="chrono-date-row">
-          <div class="date-badge day-of-week" id="chrono-weekday">TUESDAY</div>
-          <div class="date-divider"></div>
-          <div class="date-primary tabular" id="chrono-full-date">OCTOBER 20, 2026</div>
-          <div class="date-divider"></div>
-          <div class="date-meta tabular" id="chrono-doy">DOY 293 // WK 43</div>
-        </div>
-
-        <!-- Concentric Time Progress Bars (Hours / Minutes / Seconds linear mirror) -->
-        <div class="chrono-arc-meters">
-          <div class="arc-meter">
-            <span class="arc-label">HR</span>
-            <div class="arc-bar"><div class="arc-fill" id="meter-hr"></div></div>
-          </div>
-          <div class="arc-meter">
-            <span class="arc-label">MIN</span>
-            <div class="arc-bar"><div class="arc-fill" id="meter-min"></div></div>
-          </div>
-          <div class="arc-meter">
-            <span class="arc-label">SEC</span>
-            <div class="arc-bar"><div class="arc-fill" id="meter-sec"></div></div>
-          </div>
-        </div>
+      <div class="date-row tabular" id="chrono-date">
+        TUESDAY, OCTOBER 20
       </div>
     </section>
 
-    <!-- RIGHT FLANK: Mind Stone Neural Comparison & Live Hex Stream -->
-    <aside class="hud-flank hud-flank-right" aria-label="Stark Lab Diagnostics and Chronological Telemetry">
-      <section class="hud-panel">
-        <div class="panel-corner panel-corner-tr"></div>
-        <div class="panel-corner panel-corner-br"></div>
-        <div class="panel-header">
-          <span class="panel-index">03</span>
-          <span class="panel-title">CHRONO-SPATIAL TELEMETRY</span>
-          <span class="panel-tag">SYNCED</span>
-        </div>
+    <!-- Bottom-Right Discreet Circular Icon Controls (Auto-hide on idle) -->
+    <nav class="corner-controls" id="corner-controls" aria-label="Screensaver Controls">
+      <button type="button" class="icon-btn" id="btn-pause" title="Pause / Resume Motion (Space)" aria-label="Pause or Resume Motion">
+        <svg id="icon-pause" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+          <line x1="9" y1="6" x2="9" y2="18"></line>
+          <line x1="15" y1="6" x2="15" y2="18"></line>
+        </svg>
+        <svg id="icon-play" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+          <polygon points="8 6 18 12 8 18 8 6"></polygon>
+        </svg>
+      </button>
 
-        <div class="telemetry-kv-list">
-          <div class="kv-row">
-            <span class="kv-key">ISO-8601 STAMP</span>
-            <span class="kv-val tabular" id="hud-iso">2026-10-20T20:09:41</span>
-          </div>
-          <div class="kv-row">
-            <span class="kv-key">UNIX EPOCH (HEX)</span>
-            <span class="kv-val tabular accent-amber" id="hud-epoch-hex">0x6AE9F8A5</span>
-          </div>
-          <div class="kv-row">
-            <span class="kv-key">SIDEREAL ANGLE</span>
-            <span class="kv-val tabular" id="hud-sidereal">314° 19' 08"</span>
-          </div>
-          <div class="kv-row">
-            <span class="kv-key">SOLAR CYCLE</span>
-            <span class="kv-val tabular" id="hud-solar-progress">83.98% ELAPSED</span>
-          </div>
-        </div>
-      </section>
+      <button type="button" class="icon-btn active" id="btn-format" title="Toggle 12H / 24H Clock (T)" aria-label="Toggle 12-hour or 24-hour time format">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="8"></circle>
+          <polyline points="12 8 12 12 15 14"></polyline>
+        </svg>
+      </button>
 
-      <section class="hud-panel hud-panel-compact">
-        <div class="panel-header">
-          <span class="panel-index">04</span>
-          <span class="panel-title">NEURAL MATRIX STREAM // AOU-15</span>
-          <span class="panel-tag accent-cyan" id="matrix-mode-tag">GOLD.CORE</span>
-        </div>
-        <div class="hex-stream tabular" id="hex-stream" aria-hidden="true"></div>
-      </section>
-    </aside>
+      <button type="button" class="icon-btn" id="btn-audio" title="Toggle Meditative Ambient Harmonic Drone (A)" aria-label="Toggle Ambient Sound">
+        <svg id="icon-muted" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <line x1="22" y1="9" x2="16" y2="15"></line>
+          <line x1="16" y1="9" x2="22" y2="15"></line>
+        </svg>
+        <svg id="icon-unmuted" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+        </svg>
+      </button>
 
-    <!-- BOTTOM INTERACTIVE CONTROL DOCK (Auto-hides after 2.5s of cursor inactivity for pure screensaver immersion) -->
-    <footer class="hud-dock" id="hud-dock" aria-label="Screensaver Controls">
-      <div class="dock-inner">
-        <button type="button" class="dock-btn active" id="btn-mode" title="Cycle Neural Matrix Mode (M)">
-          <span class="btn-key">M</span>
-          <span class="btn-label" id="label-mode">MODE: J.A.R.V.I.S. GOLD</span>
-        </button>
-
-        <button type="button" class="dock-btn" id="btn-format" title="Toggle 12-Hour / 24-Hour Clock (T)">
-          <span class="btn-key">T</span>
-          <span class="btn-label" id="label-format">24H MILITARY</span>
-        </button>
-
-        <button type="button" class="dock-btn" id="btn-voice" title="J.A.R.V.I.S. Vocal Time & Status Briefing (V)">
-          <span class="btn-key">V</span>
-          <span class="btn-label">VOCAL BRIEFING</span>
-        </button>
-
-        <button type="button" class="dock-btn" id="btn-audio" title="Toggle Stark Lab Ambient Reactor Hum (A)">
-          <span class="btn-key">A</span>
-          <span class="btn-label" id="label-audio">AMBIENT HUM: OFF</span>
-        </button>
-
-        <button type="button" class="dock-btn" id="btn-pulse" title="Trigger Manual Memory Sector Re-Index (SPACE)">
-          <span class="btn-key">SPC</span>
-          <span class="btn-label">INDEX PULSE</span>
-        </button>
-
-        <button type="button" class="dock-btn" id="btn-hud" title="Toggle Minimal Core-Only Time View (H)">
-          <span class="btn-key">H</span>
-          <span class="btn-label" id="label-hud">HUD: FULL LAB</span>
-        </button>
-
-        <button type="button" class="dock-btn dock-btn-primary" id="btn-fullscreen" title="Engage Fullscreen Screensaver Mode (F)">
-          <span class="btn-key">F</span>
-          <span class="btn-label" id="label-fullscreen">FULLSCREEN</span>
-        </button>
-      </div>
-      <div class="dock-hint">
-        MOVE CURSOR OR PRESS ANY KEY TO REVEAL CONTROLS • DRAG SPHERE TO ORBIT 3D MATRIX • DOUBLE-CLICK FOR FULLSCREEN
-      </div>
-    </footer>
+      <button type="button" class="icon-btn" id="btn-fullscreen" title="Toggle Fullscreen (F)" aria-label="Toggle Fullscreen">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 3H5a2 2 0 0 0-2 2v3"></path>
+          <path d="M21 8V5a2 2 0 0 0-2-2h-3"></path>
+          <path d="M3 16v3a2 2 0 0 0 2 2h3"></path>
+          <path d="M16 21h3a2 2 0 0 0 2-2v-3"></path>
+        </svg>
+      </button>
+    </nav>
   </main>
 
   <script type="module" src="js/hud.js"></script>
