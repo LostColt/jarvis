@@ -118,14 +118,14 @@ console.log('[2/5] Running 10,000-Frame 3D Holographic Weave & Spoke Pulse Stres
   assert.equal(engine.rings.length, 58, '58 woven hairline spherical shells present');
   assert.equal(engine.spokes.length, 28, '28 paired radial spoke trusses with traveling pulses present');
   assert.equal(engine.terraces.length, 8, '8 asymmetric outer terraced C-ribbons present');
-  assert.equal(engine.voxelCount, 2200, '2,200 pinpoint & bokeh 3D nodes present');
+  assert.equal(engine.voxelCount, 4600, '4,600 Houdini golden particles & bloom nodes present');
 
   for (let i = 0; i < engine.spokes.length; i++) {
     assert.ok(engine.spokes[i].pulsePos >= 0 && engine.spokes[i].pulsePos <= 1, `Spoke ${i} pulse bounded [0,1]`);
   }
 
   console.log(`  ✓ Passed: 10,000 3D frames rendered in ${elapsedMs.toFixed(1)}ms (${avgFrameMs.toFixed(3)}ms/frame).`);
-  console.log('  ✓ Passed: Hollow iris core (22 loops), 58 woven shells, 28 radial spoke trusses, 8 outer terraces & 2,200 bokeh nodes verified.');
+  console.log('  ✓ Passed: Core lattice (22 loops), 58 scaffolding cages, 28 radial truss towers, 8 protruding lobes & 4,600 Houdini particles verified.');
 }
 
 // ----------------------------------------------------------------------------
